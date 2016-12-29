@@ -1,0 +1,2 @@
+# cdrating
+Rating plugin
