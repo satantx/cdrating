@@ -1,10 +1,10 @@
-$.fn.StarRating = function(options)
+$.fn.cdrating = function(options)
 {
 	var options = $.extend({
-		className: 'cad-star',
-		classActive: 'active',
-		classHover: 'cad-hover',
-		default_stars_cnt: 5
+		className: 'cd-star',
+		classActive: 'cd-active',
+		classHover: 'cd-hover',
+		count: 5
 	},
 	options);
 	return this.each(function()
@@ -14,13 +14,13 @@ $.fn.StarRating = function(options)
 			rate = parseInt(data.value, 10),
 			mode = data.mode,
 			name = data.name,
-			stars_cnt = parseInt(data.starsCnt, 10);
-		doc.removeAttr('data-stars-cnt data-value');
-		if(!stars_cnt) stars_cnt = options.default_stars_cnt;
+			count = parseInt(data.count, 10);
+		doc.removeAttr('data-count data-value');
+		if(!count) count = options.count;
 		if(!rate) rate = 0;
-		else if(rate > stars_cnt) rate = stars_cnt;
-		for(var i = 0; i < stars_cnt; i++)
-			$('<div class="' + options.className + '">&#9733;</div>').appendTo(doc);
+		else if(rate > count) rate = count;
+		for(var i = 0; i < count; i++)
+			$('<div class="' + options.className + '"></div>').appendTo(doc);
 		if(rate > 0) $('.' + options.className,this).slice(0, rate).addClass(options.classActive);
 		if(mode == 'active')
 		{
