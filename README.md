@@ -1,4 +1,4 @@
-# cdrating
+# Cdrating
 
 Плагин рейтинга
 
