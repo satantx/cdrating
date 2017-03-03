@@ -1,46 +1,54 @@
-$.fn.cdrating = function(options)
+$.fn.modrate = function(options)
 {
 	var options = $.extend({
-		className: 'cd-star',
-		classActive: 'cd-active',
-		classHover: 'cd-hover',
-		count: 5
+		className: 'rate-star',
+		classActive: 'rate-active',
+		classHover: 'rate-hover',
+		classGrab: 'rate-grab',
+		count: 5,
+		text: '★'
 	},
 	options);
-	return this.each(function()
-	{
+	return this.each(function() {
+
 		var doc = $(this),
-			data = doc.data(),
-			rate = parseInt(data.value, 10),
-			mode = data.mode,
-			name = data.name,
-			count = parseInt(data.count, 10);
+			 data = doc.data(),
+			 rate = parseInt(data.value, 10),
+			 mode = data.mode,
+			 name = data.name,
+			 count = parseInt(data.count, 10),
+
+			 nameStar = options.className,
+			 activeStar = options.classActive,
+			 hoverStar = options.classHover,
+			 grabStar = options.classGrab;
+
 		doc.removeAttr('data-count data-value');
+
 		if(!count) count = options.count;
 		if(!rate) rate = 0;
 		else if(rate > count) rate = count;
+
 		for(var i = 0; i < count; i++)
-			$('<div class="' + options.className + '"></div>').appendTo(doc);
-		if(rate > 0) $('.' + options.className,this).slice(0, rate).addClass(options.classActive);
-		if(mode == 'active')
-		{
+			$('<div class="' + nameStar + '">' + options.text + '</div>').appendTo(doc);
+
+		if(rate > 0) $('.' + nameStar,this).slice(0, rate).addClass(activeStar);
+		
+		if(mode == 'active')	{
 			var input = $('<input type="hidden" name="' + name + '"/>').appendTo(doc);
-			doc.removeAttr('data-name data-mode').addClass('grab');
-			var item = $('.' + options.className, doc);
+			doc.removeAttr('data-name data-mode').addClass(grabStar);
+			var item = $('.' + nameStar, doc);
 			item.hover(
-				function()
-				{
+				function() {
 					var index = $(this).index() + 1;
-					item.slice(0, index).addClass(options.classHover);
+					item.slice(0, index).addClass(hoverStar);
 				},
-				function()
-				{
-					item.removeClass(options.classHover);
+				function() {
+					item.removeClass(hoverStar);
 				}
-			).click(function()
-			{
+			).click(function() {
 				var index = $(this).index() + 1;
-				item.removeClass(options.classActive).slice(0, index).addClass(options.classActive);
+				item.removeClass(activeStar).slice(0, index).addClass(activeStar);
 				input.val(index);
 			});
 		}
